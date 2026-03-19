@@ -1,26 +1,24 @@
 function updateVortex() {
     const agora = new Date();
 
-    // Relógio Digital
+    // Relógio Principal
     const h = String(agora.getHours()).padStart(2, '0');
     const m = String(agora.getMinutes()).padStart(2, '0');
     const s = String(agora.getSeconds()).padStart(2, '0');
     document.getElementById('vortex-clock').textContent = `${h}:${m}:${s}`;
 
-    // Data completa mantendo o "-feira"
+    // Data formatada para os dois lugares
     const opcoes = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
-    let dataTexto = agora.toLocaleDateString('pt-BR', opcoes);
-    
-    // Deixa a primeira letra maiúscula
-    document.getElementById('vortex-date').textContent = dataTexto.charAt(0).toUpperCase() + dataTexto.slice(1);
+    const dataFormatada = agora.toLocaleDateString('pt-BR', opcoes);
+    const dataCapitalizada = dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
+
+    document.getElementById('vortex-date').textContent = dataCapitalizada;
+    document.getElementById('footer-full-date').textContent = dataCapitalizada;
 }
 
-// Alternar modo Tela Cheia
 function toggleFullScreen() {
     if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => {
-            console.error(`Erro: ${err.message}`);
-        });
+        document.documentElement.requestFullscreen();
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -28,6 +26,5 @@ function toggleFullScreen() {
     }
 }
 
-// Inicia o ciclo
 setInterval(updateVortex, 1000);
 updateVortex();
