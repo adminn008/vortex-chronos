@@ -3,52 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vortex Chronos | Immersive Time</title>
+    <title>Vortex Chronos | Ultra Edition</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div id="bg-image" class="bg-animate"></div>
-    <div id="overlay"></div>
+<body onclick="toggleFullscreen()">
+    <div id="dynamic-bg"></div>
+    <div id="vignette"></div>
 
-    <div class="main-wrapper">
-        <div id="main-glass" class="glass-card">
-            <header>
-                <span id="date">QUINTA, 19 DE MARÇO</span>
-                <button id="fullscreen-btn" onclick="toggleFullscreen()">⛶ MODO CINEMA</button>
-            </header>
-
-            <div class="clock-display">
-                <h1 id="time">00:00:00</h1>
-            </div>
-
-            <div id="controls-section" class="controls">
-                <div class="control-item stopwatch-area">
-                    <span class="label">CRONÔMETRO</span>
-                    <h2 id="stopwatch">00:00</h2>
-                    <div class="btns">
-                        <button onclick="startStopwatch()" id="sw-btn">INICIAR</button>
-                        <button onclick="resetStopwatch()">ZERAR</button>
-                    </div>
-                </div>
-                
-                <div class="control-item ad-space">
-                    <small>PATROCINADO</small>
-                    <div class="ad-placeholder">SEU ADSENSE AQUI</div>
-                </div>
-            </div>
+    <div class="content-wrapper">
+        <div class="main-clock">
+            <p id="full-date">QUINTA, 19 DE MARÇO DE 2026</p>
+            <h1 id="digital-time">00:00:00</h1>
+            <div class="glow-bar"></div>
         </div>
 
-        <footer id="theme-gallery" class="theme-picker">
-            <p class="label">MUDAR FUNDO</p>
-            <div class="themes">
-                <div class="theme-thumb" onclick="setBg('night')" style="background-image:url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=200&auto=format&fit=crop')"></div>
-                <div class="theme-thumb" onclick="setBg('gaming')" style="background-image:url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=200&auto=format&fit=crop')"></div>
-                <div class="theme-thumb" onclick="setBg('space')" style="background-image:url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=200&auto=format&fit=crop')"></div>
-                <div class="theme-thumb" onclick="setBg('anime')" style="background-image:url('https://images.unsplash.com/photo-1613371834198-42266d808ae3?q=80&w=200&auto=format&fit=crop')"></div>
-                <div class="theme-thumb" onclick="setBg('abstract')" style="background-image:url('https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=200&auto=format&fit=crop')"></div>
+        <div class="bottom-dock">
+            <div class="tool-section">
+                <div class="stopwatch-pro">
+                    <span id="sw-display">00:00</span>
+                    <button onclick="event.stopPropagation(); startSW()" id="btn-sw">START</button>
+                    <button onclick="event.stopPropagation(); resetSW()">RESET</button>
+                </div>
+                <div class="ad-banner">
+                    <small>ANÚNCIO</small>
+                    <div id="adsense-here">ADSENSE</div>
+                </div>
             </div>
-        </footer>
+
+            <div class="gallery-container">
+                <div class="thumb" onclick="event.stopPropagation(); changeBg('gaming')"><span>GAMING</span></div>
+                <div class="theme-btn" onclick="event.stopPropagation(); changeBg('cyber')"><span>CYBER</span></div>
+                <div class="theme-btn" onclick="event.stopPropagation(); changeBg('nature')"><span>NATURE</span></div>
+                <div class="theme-btn" onclick="event.stopPropagation(); changeBg('minimal')"><span>DARK</span></div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
