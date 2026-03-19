@@ -3,28 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relógio Fullscreen - Vortex Chronos</title>
+    <title>Vortex Chronos | Tempo Real</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="fullscreen-bg">
-        <header class="site-brand">VORTEX CHRONOS</header>
+    <div class="vortex-container" onclick="toggleFullScreen()">
+        <header class="vortex-brand">VORTEX CHRONOS</header>
 
-        <main class="clock-content">
-            <div id="date" class="date-text"></div>
-
-            <div class="main-clock">
-                <span id="hour">00</span>
-                <span class="separator">:</span>
-                <span id="minute">00</span>
-                <span class="seconds" id="second">00</span>
-            </div>
-
-            <div id="location" class="location-text">Detectando sua cidade...</div>
+        <main class="vortex-main">
+            <div id="vortex-date" class="vortex-date"></div>
+            <div id="vortex-clock" class="vortex-time">00:00:00</div>
+            <div class="vortex-divider"></div>
+            <div id="vortex-location" class="vortex-city">LOCALIZANDO...</div>
         </main>
-        
-        <button class="fs-button" onclick="toggleFS()">Tela Cheia</button>
+
+        <footer class="vortex-footer">
+            Clique em qualquer lugar para alternar Tela Cheia
+        </footer>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
