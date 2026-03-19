@@ -106,3 +106,14 @@ body, html {
     background: #00ff41;
     color: #000;
 }
+
+/* Animação de Fade */
+@keyframes fadeInOut {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+.fade-effect {
+    animation: fadeInOut 1s ease-in-out;
+}
