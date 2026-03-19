@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"><title>Deep Focus | Som</title>
+    <link rel="stylesheet" href="style-tools.css">
+</head>
+<body>
+    <div class="tool-container">
+        <h1>DEEP FOCUS</h1>
+        <p>Sons para concentração profunda</p>
+        <button onclick="togglePlay()" id="playBtn">OUVIR CHUVA</button>
+        <audio id="rain" loop src="https://www.soundjay.com/nature/sounds/rain-07.mp3"></audio>
+    </div>
+    <script>
+        function togglePlay() {
+            const audio = document.getElementById('rain');
+            const btn = document.getElementById('playBtn');
+            if (audio.paused) { audio.play(); btn.innerText = "PARAR"; }
+            else { audio.pause(); btn.innerText = "OUVIR CHUVA"; }
+        }
+    </script>
+</body>
+</html>
