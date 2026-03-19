@@ -127,3 +127,29 @@ body, html {
     transition: color 0.3s;
 }
 .footer-nav a:hover { color: #00ff41; }
+
+.footer-nav {
+    margin-top: 15px;
+}
+
+.footer-nav a {
+    color: #00ff41; /* Verde para destacar que é um link */
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 5px 10px;
+    transition: all 0.2s;
+}
+
+.footer-nav a:hover {
+    background: rgba(0, 255, 65, 0.1);
+    border-radius: 4px;
+}
+
+/* Garante que o rodapé não suma se NÃO estiver em tela cheia */
+.vortex-footer {
+    position: relative;
+    z-index: 10; /* Fica por cima para receber o clique corretamente */
+}
+
