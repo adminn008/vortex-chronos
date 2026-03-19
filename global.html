@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"><title>Global Vortex | Mundo</title>
+    <link rel="stylesheet" href="style-tools.css">
+</head>
+<body>
+    <div class="tool-container">
+        <h1>GLOBAL VORTEX</h1>
+        <div class="world-grid" id="world-grid"></div>
+    </div>
+    <script>
+        const cities = [
+            { name: 'Nova Iorque', tz: 'America/New_York' },
+            { name: 'Londres', tz: 'Europe/London' },
+            { name: 'Tóquio', tz: 'Asia/Tokyo' },
+            { name: 'Lisboa', tz: 'Europe/Lisbon' }
+        ];
+        function updateWorld() {
+            const grid = document.getElementById('world-grid');
+            grid.innerHTML = cities.map(c => {
+                const time = new Date().toLocaleTimeString('pt-BR', { timeZone: c.tz });
+                return `<div class="city-card"><h2>${c.name}</h2><p>${time}</p></div>`;
+            }).join('');
+        }
+        setInterval(updateWorld, 1000);
+        updateWorld();
+    </script>
+</body>
+</html>
