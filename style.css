@@ -4,53 +4,87 @@
     box-sizing: border-box;
 }
 
-body {
-    background-color: #0f0f0f;
+body, html {
+    height: 100%;
+    overflow: hidden;
+    background-color: #050505;
     color: #ffffff;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.fullscreen-bg {
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
+    padding: 40px;
+    background: radial-gradient(circle at center, #111 0%, #050505 100%);
 }
 
-.date-display {
-    font-size: 1.2rem;
-    color: #aaaaaa;
-    margin-bottom: 20px;
+.site-brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 5px;
+    color: #333; /* Visual sutil no topo */
     text-transform: uppercase;
-    letter-spacing: 3px;
 }
 
-.clock-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.digit {
-    background: linear-gradient(to bottom, #2c2c2c 50%, #1e1e1e 50%);
-    padding: 20px 25px;
-    border-radius: 12px;
-    font-size: 6rem;
-    font-weight: 700;
-    min-width: 120px;
+.clock-content {
     text-align: center;
-    border: 1px solid #333;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.date-text {
+    font-size: 2rem;
+    color: #555;
+    margin-bottom: 10px;
+    font-weight: 300;
+}
+
+.main-clock {
+    font-size: 18vw; /* Tamanho responsivo baseado na largura da tela */
+    font-weight: 900;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.seconds {
+    font-size: 6vw;
+    color: #ff3e3e; /* Destaque para os segundos */
+    margin-left: 10px;
 }
 
 .separator {
-    font-size: 4rem;
-    color: #444;
-    font-weight: bold;
+    color: #222;
+    margin: 0 10px;
 }
 
-.location-display {
-    margin-top: 30px;
-    font-size: 1.4rem;
-    color: #00aaff;
-    font-weight: 300;
-    letter-spacing: 1px;
+.location-text {
+    font-size: 1.8rem;
+    color: #00d4ff;
+    font-weight: 400;
+    margin-top: 20px;
+}
+
+.fs-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: transparent;
+    border: 1px solid #333;
+    color: #555;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.fs-button:hover {
+    background: #fff;
+    color: #000;
 }
