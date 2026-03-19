@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8"><title>Chronos Lab | Cronómetro</title>
+    <link rel="stylesheet" href="style-tools.css">
+</head>
+<body>
+    <div class="tool-container">
+        <h1>CHRONOS LAB</h1>
+        <div id="display" class="big-timer">00:00:00.00</div>
+        <div class="controls">
+            <button onclick="start()">INICIAR</button>
+            <button onclick="pause()">PAUSAR</button>
+            <button onclick="reset()">LIMPAR</button>
+        </div>
+        <ul id="laps"></ul>
+    </div>
+    <script>
+        let startTime, elapsedTime = 0, timerInterval;
+        function start() {
+            startTime = Date.now() - elapsedTime;
+            timerInterval = setInterval(() => {
+                elapsedTime = Date.now() - startTime;
+                print(timeToString(elapsedTime));
+            }, 10);
+        }
+        function pause() { clearInterval(timerInterval); }
+        function reset() {
+            clearInterval(timerInterval);
+            print("00:00:00.00");
+            elapsedTime = 0;
+        }
+        function timeToString(time) {
+            let diffInHrs = time / 3600000;
+            let hh = Math.floor(diffInHrs);
+            let diffInMin = (diffInHrs - hh) * 60;
+            let mm = Math.floor(diffInMin);
+            let diffInSec = (diffInMin - mm) * 60;
+            let ss = Math.floor(diffInSec);
+            let diffInMs = (diffInSec - ss) * 100;
+            let ms = Math.floor(diffInMs);
+            return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}.${String(ms).padStart(2,"0")}`;
+        }
+        function print(txt) { document.getElementById("display").innerHTML = txt; }
+    </script>
+</body>
+</html>
