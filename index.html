@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineVertex - Streaming Gratuito</title>
+    <style>
+        :root {
+            --primary: #e50914;
+            --bg: #0f0f0f;
+            --card-bg: #1f1f1f;
+            --text: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        h1 { color: var(--primary); font-size: 2.5rem; letter-spacing: 2px; }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .movie-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+            border: 1px solid #333;
+        }
+
+        .movie-card:hover { transform: scale(1.05); border-color: var(--primary); }
+
+        .movie-card img { width: 100%; height: 280px; object-fit: cover; }
+
+        .info { padding: 15px; }
+        .info h3 { margin: 0; font-size: 1rem; }
+
+        /* Modal do Player */
+        #player-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #ad-screen { text-align: center; }
+
+        .btn-unlock {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        iframe { width: 80%; height: 60%; border: none; display: none; }
+        
+        .close-btn { position: absolute; top: 20px; right: 30px; font-size: 30px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>CINE VERTEX</h1>
+    <p>O melhor do cinema clássico e independente</p>
+</header>
+
+<div class="container" id="movie-grid">
+    <div class="movie-card" onclick="openAd('https://www.youtube.com/embed/H966m50XJm8')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Night_of_the_Living_Dead_poster.jpg" alt="A Noite dos Mortos Vivos">
+        <div class="info">
+            <h3>A Noite dos Mortos Vivos (1968)</h3>
+        </div>
+    </div>
+
+    <div class="movie-card" onclick="openAd('https://www.youtube.com/embed/v9iSAsL6lSg')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Metropolis_poster.jpg" alt="Metropolis">
+        <div class="info">
+            <h3>Metrópolis (1927)</h3>
+        </div>
+    </div>
+</div>
+
+<div id="player-modal">
+    <span class="close-btn" onclick="closePlayer()">&times;</span>
+    
+    <div id="ad-screen">
+        <h2>O filme está quase pronto!</h2>
+        <p>Clique no botão abaixo para liberar o acesso (abre em nova guia).</p>
+        <button class="btn-unlock" onclick="startAd()">LIBERAR FILME AGORA</button>
+    </div>
+
+    <iframe id="video-player" src="" allowfullscreen></iframe>
+</div>
+
+<script>
+    let currentVideoUrl = "";
+
+    function openAd(url) {
+        currentVideoUrl = url;
+        document.getElementById('player-modal').style.display = 'flex';
+        document.getElementById('ad-screen').style.display = 'block';
+        document.getElementById('video-player').style.display = 'none';
+    }
+
+    function startAd() {
+        // Simula a abertura do link de anúncio (AdSense/Encurtador)
+        window.open('https://google.com', '_blank'); // Aqui você colocaria seu link do Adsterra ou Encurtador
+        
+        // Simula um delay de carregamento e libera o filme
+        setTimeout(() => {
+            document.getElementById('ad-screen').style.display = 'none';
+            const player = document.getElementById('video-player');
+            player.src = currentVideoUrl;
+            player.style.display = 'block';
+        }, 1000);
+    }
+
+    function closePlayer() {
+        document.getElementById('player-modal').style.display = 'none';
+        document.getElementById('video-player').src = "";
+    }
+</script>
+
+</body>
+</html>
