@@ -3,76 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vortex Pro | Dashboard</title>
+    <title>Vortex Pro | Gestão Inteligente</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="dashboard">
-        <aside class="sidebar">
+    <div class="app-container">
+        <header class="top-bar">
             <div class="logo">VORTEX<span>PRO</span></div>
-            <nav>
-                <a href="#" class="active">Painel Principal</a>
-                <a href="#">Meus Projetos</a>
-                <a href="#">Orçamentos</a>
-                <a href="#">Configurações</a>
-            </nav>
-            <div class="user-card">
-                <div class="avatar">W</div>
-                <span>Welington</span>
+            <div class="user-info">
+                <input type="text" id="userNameInput" placeholder="Seu nome aqui..." oninput="atualizarNome()">
+                <div class="avatar" id="userInitial">U</div>
             </div>
-        </aside>
+        </header>
 
-        <main class="content">
-            <header>
-                <h2>Bem-vindo de volta</h2>
-                <div class="date" id="currentDate"></div>
-            </header>
-
-            <section class="stats">
-                <div class="stat-card">
-                    <p>Projetos Ativos</p>
-                    <h3 id="projCount">12</h3>
-                </div>
-                <div class="stat-card">
-                    <p>Receita Estimada</p>
-                    <h3>R$ 2.450,00</h3>
-                </div>
-                <div class="stat-card ad-space">
-                    <span>Anúncio Parceiro</span>
-                </div>
+        <main class="main-content">
+            <section class="welcome">
+                <h1>Olá, <span id="displayNome">Usuário</span>!</h1>
+                <p id="currentDate"></p>
             </section>
 
-            <section class="tool-section">
-                <div class="tool-card">
-                    <h3>Gerador de Orçamento Rápido</h3>
-                    <div class="input-group">
-                        <label>Serviço (Edição/Dev)</label>
-                        <select id="servico">
-                            <option value="150">Site Institucional</option>
-                            <option value="50">Edição Carrossel Insta</option>
-                            <option value="80">Landing Page</option>
+            <div class="dashboard-grid">
+                
+                <div class="card">
+                    <h3>💰 Gerador de Orçamento</h3>
+                    <div class="form-group">
+                        <label>Serviço</label>
+                        <select id="tipoServico" onchange="calcular()">
+                            <option value="0">Selecione...</option>
+                            <option value="150">Site Institucional (R$ 150)</option>
+                            <option value="50">Edição de Foto (R$ 50)</option>
+                            <option value="80">Landing Page (R$ 80)</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label>Quantidade/Horas</label>
-                        <input type="number" id="qtd" value="1" oninput="calcular()">
+                    <div class="form-group">
+                        <label>Quantidade</label>
+                        <input type="number" id="qtd" value="1" min="1" oninput="calcular()">
                     </div>
-                    <div class="result">
-                        Total: <span id="total">R$ 150,00</span>
+                    <div class="total-area">
+                        Total: <strong id="totalValor">R$ 0,00</strong>
                     </div>
-                    <button class="btn-main" onclick="alert('Orçamento Gerado!')">Gerar PDF</button>
+                    <button class="btn-action" onclick="gerarResumo()">Salvar Orçamento</button>
                 </div>
 
-                <div class="tool-card">
-                    <h3>Lista de Tarefas</h3>
-                    <ul class="task-list">
-                        <li><input type="checkbox" checked> Finalizar CSS do Dashboard</li>
-                        <li><input type="checkbox"> Configurar AdSense</li>
-                        <li><input type="checkbox"> Subir pro GitHub Pages</li>
-                    </ul>
+                <div class="card">
+                    <h3>✅ Minhas Tarefas</h3>
+                    <div class="add-task">
+                        <input type="text" id="taskInput" placeholder="Nova tarefa...">
+                        <button onclick="addTarefa()">+</button>
+                    </div>
+                    <ul id="taskList" class="task-list">
+                        </ul>
                 </div>
-            </section>
+
+                <div class="card ad-card">
+                    <span>ANÚNCIO MONETIZADO</span>
+                    <p>Espaço reservado para Google AdSense</p>
+                </div>
+
+            </div>
         </main>
     </div>
     <script src="script.js"></script>
