@@ -1,123 +1,82 @@
 :root {
     --accent: #00ff88;
-    --glass: rgba(255, 255, 255, 0.04);
-    --border: rgba(255, 255, 255, 0.1);
-    --text: #eee;
+    --text: #ffffff;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; transition: 0.5s ease; }
+* { margin: 0; padding: 0; box-sizing: border-box; cursor: none; } /* Cursor oculto para imersão */
 
 body {
     background: #000;
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
+    color: var(--text);
 }
 
-/* Background Image e Overlay */
-.bg-animate {
+/* Efeito de Fundo Imersivo */
+#dynamic-bg {
     position: fixed; inset: 0;
-    background-size: cover;
-    background-position: center;
-    filter: blur(10px);
+    background-size: cover; background-position: center;
+    transition: 1s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: -2;
-    transform: scale(1.1);
 }
-#overlay {
+
+#vignette {
     position: fixed; inset: 0;
-    background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, #000 100%);
+    background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
     z-index: -1;
 }
 
-.main-wrapper {
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: space-around;
-    height: 90vh; width: 100%;
+.content-wrapper {
+    height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
 }
 
-.glass-card {
-    background: var(--glass);
-    backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-    border: 1px solid var(--border);
-    border-radius: 40px;
-    padding: 60px;
-    width: 90vw; max-width: 1000px;
-    text-align: center;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+/* Relógio Tela Cheia */
+.main-clock { text-align: center; }
+
+#full-date {
+    letter-spacing: 8px; font-weight: 200; opacity: 0.6;
+    margin-bottom: 10px; font-size: 1rem;
 }
 
-header { display: flex; justify-content: space-between; font-size: 0.75rem; color: #888; letter-spacing: 3px; }
-
-#fullscreen-btn {
-    background: none; border: 1px solid var(--border);
-    color: var(--text); cursor: pointer; border-radius: 20px;
-    padding: 5px 15px; font-size: 0.7rem;
-}
-#fullscreen-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-.clock-display h1 {
-    font-size: 11rem; font-weight: 700;
-    margin: 30px 0; line-height: 1;
-    text-shadow: 0 0 40px rgba(0, 255, 136, 0.2);
+#digital-time {
+    font-size: 18vw; font-weight: 800; line-height: 0.8;
+    letter-spacing: -5px;
+    background: linear-gradient(to bottom, #fff, #444);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 
-.controls {
-    display: grid; grid-template-columns: 1.5fr 1fr;
-    gap: 25px; margin-top: 50px;
+.glow-bar {
+    width: 100px; height: 4px; background: var(--accent);
+    margin: 20px auto; border-radius: 2px;
+    box-shadow: 0 0 20px var(--accent);
 }
 
-.control-item {
-    background: rgba(0,0,0,0.4); padding: 20px;
-    border-radius: 20px; border: 1px solid var(--border);
+/* Dock Inferior que "esconde" */
+.bottom-dock {
+    position: fixed; bottom: -180px; width: 100%;
+    background: rgba(0,0,0,0.8); backdrop-filter: blur(20px);
+    padding: 30px; transition: 0.4s;
 }
 
-.label { font-size: 0.65rem; color: #888; letter-spacing: 2px; text-transform: uppercase; }
-h2 { font-size: 2rem; margin: 10px 0; }
+.bottom-dock:hover { bottom: 0; cursor: default; }
 
-.btns button {
-    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-    color: white; padding: 10px 20px; border-radius: 8px;
-    cursor: pointer; font-size: 0.7rem; margin: 0 5px;
+.tool-section { display: flex; justify-content: space-around; align-items: center; margin-bottom: 20px; }
+
+.stopwatch-pro { background: #111; padding: 15px 30px; border-radius: 50px; border: 1px solid #222; }
+.stopwatch-pro span { font-size: 1.5rem; margin-right: 20px; font-weight: bold; color: var(--accent); }
+.stopwatch-pro button { background: none; border: 1px solid #333; color: #fff; padding: 5px 15px; border-radius: 20px; cursor: pointer; margin-left: 5px; }
+
+.gallery-container { display: flex; gap: 10px; justify-content: center; }
+
+.theme-btn {
+    width: 120px; height: 60px; background: #222; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid #333; cursor: pointer; font-size: 0.7rem; font-weight: bold;
 }
-.btns button:hover { background: white; color: black; }
+.theme-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-.ad-placeholder {
-    height: 60px; display: flex; align-items: center;
-    justify-content: center; color: var(--accent);
-    border: 1px dashed var(--accent); margin-top: 10px; font-size: 0.7rem;
-}
-
-/* Galeria de Temas */
-.theme-picker { text-align: center; margin-top: 30px; }
-.themes { display: flex; gap: 15px; margin-top: 10px; }
-.theme-thumb {
-    width: 60px; height: 60px;
-    background-size: cover; background-position: center;
-    border-radius: 12px; border: 2px solid transparent;
-    cursor: pointer;
-}
-.theme-thumb:hover, .theme-thumb.active { border-color: var(--accent); transform: scale(1.1); }
-
-/* --- CSS ESPECIAL PARA TELA CHEIA --- */
-:fullscreen .main-wrapper { height: 100vh; justify-content: center; }
-:fullscreen #bg-image { background: black !important; filter: none; }
-:fullscreen #overlay { display: none; }
-:fullscreen .glass-card { background: none; border: none; box-shadow: none; padding: 0; backdrop-filter: none; }
-:fullscreen .controls, :fullscreen footer, :fullscreen #fullscreen-btn { display: none !important; }
-:fullscreen .clock-display h1 {
-    font-size: 16vw; text-shadow: 0 0 50px rgba(0, 255, 136, 0.4);
-    animation: glowpulse 3s infinite alternate;
-}
-:fullscreen header { justify-content: center; }
-
-@keyframes glowpulse { from { opacity: 1; } to { opacity: 0.8; } }
-
-@media (max-width: 768px) {
-    .clock-display h1 { font-size: 5rem; }
-    .controls { grid-template-columns: 1fr; }
-    .glass-card { padding: 30px; }
-}
+/* MODO TELA CHEIA (Esconde tudo mesmo) */
+:fullscreen .bottom-dock { display: none; }
+:fullscreen * { cursor: none; }
