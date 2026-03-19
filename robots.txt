@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://adminn008.github.io/sitemap.xml
