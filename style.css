@@ -1,4 +1,60 @@
-/* ... (mantenha o CSS anterior e adicione/ajuste estas partes) ... */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+.vortex-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.vortex-brand {
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.6rem;
+    color: #333;
+}
+
+.vortex-main {
+    text-align: center;
+    cursor: pointer;
+}
+
+.vortex-date {
+    font-size: 2vw;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+}
+
+.vortex-time {
+    font-size: 22vw;
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.6vw;
+    font-variant-numeric: tabular-nums;
+}
+
+.vortex-region {
+    font-size: 1.2vw;
+    color: #00ff41;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    margin-top: 10px;
+}
 
 .donation-box {
     background: #080808;
@@ -7,14 +63,12 @@
     border-radius: 12px;
     max-width: 600px;
     text-align: center;
-    margin-bottom: 40px;
 }
 
 .donation-box p {
     font-size: 0.85rem;
-    color: #888;
+    color: #666;
     margin-bottom: 15px;
-    line-height: 1.6;
 }
 
 .pix-button {
@@ -23,12 +77,9 @@
     border: 2px solid #00ff41;
     padding: 12px 30px;
     font-weight: 900;
-    font-size: 0.9rem;
     letter-spacing: 2px;
     cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
+    transition: all 0.3s;
 }
 
 .pix-button:hover {
@@ -37,17 +88,12 @@
     box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
 }
 
-.pix-button:active {
-    transform: scale(0.95);
-}
-
-/* Estilo do Rodapé */
 .vortex-footer {
-    width: 100%;
-    padding-top: 30px;
-    border-top: 1px solid #111;
     text-align: center;
+    width: 100%;
+    padding-top: 20px;
+    border-top: 1px solid #111;
 }
 
-.footer-line { font-size: 0.85rem; color: #555; margin-bottom: 8px; }
-.footer-copyright { font-size: 0.7rem; color: #222; letter-spacing: 1px; }
+.footer-line { font-size: 0.85rem; color: #555; margin-bottom: 5px; }
+.footer-copyright { font-size: 0.7rem; color: #222; }
