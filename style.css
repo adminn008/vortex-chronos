@@ -1,50 +1,90 @@
-// Atualiza Tempo e Data
-function updateDisplay() {
-    const now = new Date();
-
-    const h = String(now.getHours()).padStart(2, '0');
-    const m = String(now.getMinutes()).padStart(2, '0');
-    const s = String(now.getSeconds()).padStart(2, '0');
-
-    document.getElementById('hour').textContent = h;
-    document.getElementById('minute').textContent = m;
-    document.getElementById('second').textContent = s;
-
-    const options = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
-    document.getElementById('date').textContent = now.toLocaleDateString('pt-BR', options);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Busca Cidade por Geolocalização
-async function getCity() {
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            const { latitude, longitude } = position.coords;
-            try {
-                const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=pt`);
-                const data = await response.json();
-                const cidade = data.city || data.locality || "Cidade não encontrada";
-                const estado = data.principalSubdivision || "";
-                document.getElementById('location').textContent = `${cidade}, ${estado}`;
-            } catch (error) {
-                document.getElementById('location').textContent = "Erro de conexão";
-            }
-        }, () => {
-            document.getElementById('location').textContent = "Localização negada";
-        });
-    }
+body, html {
+    height: 100%;
+    overflow: hidden;
+    background-color: #050505;
+    color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-// Função para ativar Tela Cheia no navegador
-function toggleFS() {
-    if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        }
-    }
+.fullscreen-bg {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px;
+    background: radial-gradient(circle at center, #111 0%, #050505 100%);
 }
 
-setInterval(updateDisplay, 1000);
-updateDisplay();
-getCity();
+.site-brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 5px;
+    color: #333; /* Visual sutil no topo */
+    text-transform: uppercase;
+}
+
+.clock-content {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.date-text {
+    font-size: 2rem;
+    color: #555;
+    margin-bottom: 10px;
+    font-weight: 300;
+}
+
+.main-clock {
+    font-size: 18vw; /* Tamanho responsivo baseado na largura da tela */
+    font-weight: 900;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.seconds {
+    font-size: 6vw;
+    color: #ff3e3e; /* Destaque para os segundos */
+    margin-left: 10px;
+}
+
+.separator {
+    color: #222;
+    margin: 0 10px;
+}
+
+.location-text {
+    font-size: 1.8rem;
+    color: #00d4ff;
+    font-weight: 400;
+    margin-top: 20px;
+}
+
+.fs-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: transparent;
+    border: 1px solid #333;
+    color: #555;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.fs-button:hover {
+    background: #fff;
+    color: #000;
+}
