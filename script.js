@@ -7,13 +7,15 @@ async function getCityByIP() {
 
     // Tenta a primeira API (ipapi.co)
     try {
-        const response = await fetch('https://ipapi.co/json/');
-        const data = await response.json();
-        
-        if (data && data.city) {
-            elementoLocal.textContent = `Horário de ${data.city}`;
-            return; // Se funcionou, para aqui
-        }
+        // No seu script.js, troque a linha do 'fetch' por esta:
+const response = await fetch('https://ipwho.is/');
+const data = await response.json();
+
+// E ajuste o if para:
+if (data && data.city) {
+    document.getElementById('vortex-location').textContent = `Horário de ${data.city}`;
+}
+
     } catch (e) {
         console.log("Tentando segunda opção de localização...");
     }
