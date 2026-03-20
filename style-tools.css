@@ -1,8 +1,18 @@
 body {
-    background: #000; color: #fff; font-family: sans-serif;
-    display: flex; justify-content: center; align-items: center;
-    height: 100vh; margin: 0; text-align: center;
+    background: #000; 
+    color: #fff; 
+    font-family: 'Inter', sans-serif;
+    display: flex; 
+    flex-direction: column; /* Organiza título no topo e grid embaixo */
+    justify-content: flex-start; /* Começa do topo */
+    align-items: center;
+    min-height: 100vh; /* 'min-height' em vez de 'height' fixo */
+    margin: 0; 
+    padding: 40px 0; /* Espaço no topo e embaixo para não colar na borda */
+    text-align: center;
+    overflow-y: auto; /* Permite rolar a página se tiver muitas cidades */
 }
+
 .tool-container { border: 1px solid #1a1a1a; padding: 50px; border-radius: 20px; }
 h1 { letter-spacing: 5px; color: #444; font-size: 1.2rem; margin-bottom: 30px; }
 .big-timer { font-size: 5rem; font-weight: bold; margin-bottom: 20px; font-variant-numeric: tabular-nums; }
