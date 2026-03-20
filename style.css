@@ -52,12 +52,15 @@ body, html {
 }
 
 .vortex-region {
-    font-size: 1.5vw;
-    color: #00ff41;
+    font-size: 1.2rem; /* Aumenta o tamanho do nome da cidade */
+    color: #444;       /* Cinza elegante */
     text-transform: uppercase;
-    letter-spacing: 0.3rem;
-    margin-top: 15px;
+    letter-spacing: 4px;
+    font-weight: bold;
+    margin-top: 20px;
+    display: block !important; /* Garante que apareça */
 }
+
 
 /* Esconder elementos quando em Tela Cheia */
 :fullscreen .hide-on-fs {
