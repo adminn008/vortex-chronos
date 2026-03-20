@@ -1,21 +1,37 @@
 async function getCityByIP() {
+    const elementoLocal = document.getElementById('vortex-location');
+    
+    // Tenta a primeira API (ipapi.co)
     try {
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
-        const elementoLocal = document.getElementById('vortex-location');
         
         if (data && data.city) {
-            // Isso aqui vai atualizar o texto para "Horário de Curitiba"
             elementoLocal.textContent = `Horário de ${data.city}`;
+            return; // Se funcionou, para aqui
         }
-    } catch (error) {
-        console.log("Erro na API de localização");
+    } catch (e) {
+        console.log("Tentando segunda opção de localização...");
+    }
+
+    // Se a primeira falhar, tenta a segunda (ip-api.com via HTTPS)
+    try {
+        const response = await fetch('https://ipwho.is/');
+        const data = await response.json();
+        
+        if (data && data.city) {
+            elementoLocal.textContent = `Horário de ${data.city}`;
+        } else {
+            elementoLocal.textContent = "Horário Local";
+        }
+    } catch (e) {
+        elementoLocal.textContent = "Horário Local";
+        console.error("Todas as APIs de localização falharam.");
     }
 }
 
-// ESSA LINHA ABAIXO É OBRIGATÓRIA PARA FUNCIONAR:
-getCityByIP(); 
-
+// Chame a função no final do arquivo
+getCityByIP();
 
 let ultimaData = "";
 
