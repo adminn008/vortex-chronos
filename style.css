@@ -166,30 +166,3 @@ body, html {
     color: #00ff41;
     margin-top: 5px;
 }
-
-.moon-box {
-    margin-top: 15px; /* Espaço abaixo da cidade */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    animation: fadeIn 2s ease-in; /* Aparece suavemente */
-}
-
-#moon-icon {
-    font-size: 1.8rem; /* Tamanho médio equilibrado */
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
-}
-
-#moon-phase-name {
-    font-size: 0.65rem;
-    color: #444; /* Cor discreta para não distrair do relógio */
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-weight: bold;
-}
-
-/* Esconde na tela cheia para o relógio brilhar sozinho */
-.hide-on-fs.moon-box {
-    display: none;
-}
