@@ -1,6 +1,10 @@
+// COLOQUE ISSO NA PRIMEIRA LINHA DO SEU SCRIPT.JS
+getCityByIP(); 
+
 async function getCityByIP() {
-    const elementoLocal = document.getElementById('vortex-location');
-    
+    // ... resto do código ...
+}
+
     // Tenta a primeira API (ipapi.co)
     try {
         const response = await fetch('https://ipapi.co/json/');
