@@ -114,31 +114,3 @@ document.addEventListener('keydown', (event) => {
     if (event.key.toLowerCase() === 'm') window.location.href = 'global.html';
     if (event.key.toLowerCase() === 'c') window.location.href = 'cronometro.html';
 });
-
-async function updateMoon() {
-    try {
-        // API gratuita que retorna a fase da lua detalhada
-        const response = await fetch('https://api.farmsense.net/v1/moonphases/?d=' + Math.floor(Date.now() / 1000));
-        const data = await response.json();
-        const moon = data[0];
-
-        // Mapeamento simples de ícones (ou você pode usar o SVG da dica anterior)
-        const moonIcons = {
-            "New Moon": "🌑", "Waxing Crescent": "🌒", "First Quarter": "🌓", 
-            "Waxing Gibbous": "🌔", "Full Moon": "🌕", "Waning Gibbous": "🌖", 
-            "Third Quarter": "🌗", "Waning Crescent": "🌘"
-        };
-
-        const moonNames = {
-            "New Moon": "Lua Nova", "Waxing Crescent": "Crescente", "First Quarter": "Quarto Crescente",
-            "Waxing Gibbous": "Crescente Gibosa", "Full Moon": "Lua Cheia", "Waning Gibbous": "Minguante Gibosa",
-            "Third Quarter": "Quarto Minguante", "Waning Crescent": "Minguante"
-        };
-
-        document.getElementById('moon-icon').textContent = moonIcons[moon.Phase] || "🌙";
-        document.getElementById('moon-phase-name').textContent = moonNames[moon.Phase] || moon.Phase;
-    } catch (err) {
-        console.log("Erro ao carregar lua:", err);
-    }
-}
-updateMoon();
