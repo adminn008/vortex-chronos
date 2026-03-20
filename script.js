@@ -1,29 +1,24 @@
 async function getCityByIP() {
+    const elementoLocal = document.getElementById('vortex-location');
     try {
-        // Usando a ipapi.co que aceita HTTPS e é gratuita
+        // Usando a ipapi.co (mais estável para HTTPS)
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
         
-        const elementoLocal = document.getElementById('vortex-location');
-        
         if (data && data.city) {
-            // Se achar a cidade, coloca o nome dela
             elementoLocal.textContent = `Horário de ${data.city}`;
+            console.log("Cidade detectada: " + data.city);
         } else {
-            // Se não achar, coloca um padrão amigável
             elementoLocal.textContent = "Horário Local";
         }
     } catch (error) {
-        // Se der erro (Adblock ou rede), define o padrão
-        document.getElementById('vortex-location').textContent = "Horário Local";
-        console.warn("Não foi possível obter a cidade:", error);
+        elementoLocal.textContent = "Horário Local";
+        console.error("Erro na localização:", error);
     }
 }
 
-// Inicializa a busca
+// Chame a função logo no início
 getCityByIP();
-
-
 
 let ultimaData = "";
 
