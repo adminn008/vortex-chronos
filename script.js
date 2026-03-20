@@ -1,25 +1,28 @@
-// Função para buscar a cidade via IP (Sem pedir permissão)
 async function getCityByIP() {
     try {
-        const response = await fetch('http://ip-api.com/json/?fields=city');
+        // Usando a ipapi.co que aceita HTTPS e é gratuita
+        const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
         
+        const elementoLocal = document.getElementById('vortex-location');
+        
         if (data && data.city) {
-            document.getElementById('vortex-location').textContent = `Horário de ${data.city}`;
+            // Se achar a cidade, coloca o nome dela
+            elementoLocal.textContent = `Horário de ${data.city}`;
         } else {
-            document.getElementById('vortex-location').textContent = "Horário Local";
+            // Se não achar, coloca um padrão amigável
+            elementoLocal.textContent = "Horário Local";
         }
     } catch (error) {
-        // Se a API falhar ou houver bloqueio de AdBlock, mantém o padrão
+        // Se der erro (Adblock ou rede), define o padrão
         document.getElementById('vortex-location').textContent = "Horário Local";
-        console.log("Erro ao buscar cidade:", error);
+        console.warn("Não foi possível obter a cidade:", error);
     }
 }
 
-// Chame a função uma vez quando o site carregar
+// Inicializa a busca
 getCityByIP();
 
-// ... (Mantenha o resto do seu script.js igual)
 
 
 let ultimaData = "";
