@@ -1,32 +1,143 @@
-<!-- MENSAGEM DE EM BREVE -->
-<div style="text-align: center; margin-top: 100px; font-family: sans-serif;">
-    <h1 style="font-size: 50px;">Em Breve</h1>
-    <p>Estamos preparando novidades.</p>
-</div>
-
-<!-- O CODIGO ABAIXO ESTA "DESATIVADO" (COMENTADO) -->
-<div style="display: none;">
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8"><title>Deep Focus | Som</title>
+    <meta charset="UTF-8">
+    <title>Deep Focus | Som & Imersão</title>
     <link rel="stylesheet" href="style-tools.css">
+    <style>
+        .sound-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .sound-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #1a1a1a;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .sound-card.active {
+            border-color: #00ff41;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+        }
+
+        .sound-card h2 {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        /* Estilo do Slider de Volume */
+        input[type=range] {
+            width: 100%;
+            cursor: pointer;
+            accent-color: #00ff41;
+        }
+
+        .btn-toggle {
+            background: transparent;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            border-radius: 4px;
+        }
+
+        .btn-toggle.on {
+            background: #00ff41;
+            color: #000;
+            border-color: #00ff41;
+        }
+
+        .master-controls {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #1a1a1a;
+        }
+    </style>
 </head>
 <body>
     <div class="tool-container">
         <h1>DEEP FOCUS</h1>
-        <p>Sons para concentração profunda</p>
-        <button onclick="togglePlay()" id="playBtn">OUVIR CHUVA</button>
-        <audio id="rain" loop src="https://www.soundjay.com/nature/sounds/rain-07.mp3"></audio>
+        <p>Crie o seu ambiente perfeito para concentração</p>
+
+        <div class="sound-grid">
+            <div class="sound-card" id="card-rain">
+                <h2>🌧️ Chuva</h2>
+                <button class="btn-toggle" onclick="toggleSound('rain')">LIGAR</button>
+                <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume('rain', this.value)">
+                <audio id="audio-rain" loop src="https://www.soundjay.com/nature/sounds/rain-07.mp3"></audio>
+            </div>
+
+            <div class="sound-card" id="card-cafe">
+                <h2>☕ Cafeteria</h2>
+                <button class="btn-toggle" onclick="toggleSound('cafe')">LIGAR</button>
+                <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume('cafe', this.value)">
+                <audio id="audio-cafe" loop src="https://www.soundjay.com/misc/sounds/small-restaurant-ambience-1.mp3"></audio>
+            </div>
+
+            <div class="sound-card" id="card-wind">
+                <h2>🍃 Vento</h2>
+                <button class="btn-toggle" onclick="toggleSound('wind')">LIGAR</button>
+                <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume('wind', this.value)">
+                <audio id="audio-wind" loop src="https://www.soundjay.com/nature/sounds/wind-01.mp3"></audio>
+            </div>
+
+            <div class="sound-card" id="card-fire">
+                <h2>🔥 Lareira</h2>
+                <button class="btn-toggle" onclick="toggleSound('fire')">LIGAR</button>
+                <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume('fire', this.value)">
+                <audio id="audio-fire" loop src="https://www.soundjay.com/misc/sounds/fireplace-1.mp3"></audio>
+            </div>
+        </div>
+
+        <div class="master-controls">
+            <button onclick="stopAll()" style="background: #ff4444; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">PARAR TUDO</button>
+        </div>
     </div>
+
     <script>
-        function togglePlay() {
-            const audio = document.getElementById('rain');
-            const btn = document.getElementById('playBtn');
-            if (audio.paused) { audio.play(); btn.innerText = "PARAR"; }
-            else { audio.pause(); btn.innerText = "OUVIR CHUVA"; }
+        function toggleSound(id) {
+            const audio = document.getElementById('audio-' + id);
+            const card = document.getElementById('card-' + id);
+            const btn = card.querySelector('.btn-toggle');
+
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = "PARAR";
+                btn.classList.add('on');
+                card.classList.add('active');
+            } else {
+                audio.pause();
+                btn.innerText = "LIGAR";
+                btn.classList.remove('on');
+                card.classList.remove('active');
+            }
+        }
+
+        function changeVolume(id, val) {
+            const audio = document.getElementById('audio-' + id);
+            audio.volume = val;
+        }
+
+        function stopAll() {
+            const audios = document.querySelectorAll('audio');
+            const buttons = document.querySelectorAll('.btn-toggle');
+            const cards = document.querySelectorAll('.sound-card');
+
+            audios.forEach(a => { a.pause(); a.currentTime = 0; });
+            buttons.forEach(b => { b.innerText = "LIGAR"; b.classList.remove('on'); });
+            cards.forEach(c => c.classList.remove('active'));
         }
     </script>
 </body>
