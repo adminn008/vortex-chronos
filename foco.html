@@ -35,7 +35,6 @@
             text-transform: uppercase;
         }
 
-        /* Estilo do Slider de Volume */
         input[type=range] {
             width: 100%;
             cursor: pointer;
@@ -51,12 +50,14 @@
             cursor: pointer;
             font-size: 0.7rem;
             border-radius: 4px;
+            width: 80%;
         }
 
         .btn-toggle.on {
             background: #00ff41;
             color: #000;
             border-color: #00ff41;
+            font-weight: bold;
         }
 
         .master-controls {
@@ -64,45 +65,54 @@
             padding-top: 20px;
             border-top: 1px solid #1a1a1a;
         }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #555;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
     <div class="tool-container">
+        <a href="index.html" class="back-btn">← VOLTAR AO VORTEX</a>
         <h1>DEEP FOCUS</h1>
-        <p>Crie o seu ambiente perfeito para concentração</p>
+        <p>Combine os sons para o foco perfeito</p>
 
         <div class="sound-grid">
             <div class="sound-card" id="card-rain">
                 <h2>🌧️ Chuva</h2>
                 <button class="btn-toggle" onclick="toggleSound('rain')">LIGAR</button>
                 <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume('rain', this.value)">
-                <audio id="audio-rain" loop src="https://www.soundjay.com/nature/sounds/rain-07.mp3"></audio>
+                <audio id="audio-rain" loop src="https://actions.google.com/sounds/v1/ambiences/rain_on_roof.ogg"></audio>
             </div>
 
             <div class="sound-card" id="card-cafe">
-                <h2>☕ Cafeteria</h2>
+                <h2>☕ Café</h2>
                 <button class="btn-toggle" onclick="toggleSound('cafe')">LIGAR</button>
                 <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume('cafe', this.value)">
-                <audio id="audio-cafe" loop src="https://www.soundjay.com/misc/sounds/small-restaurant-ambience-1.mp3"></audio>
+                <audio id="audio-cafe" loop src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg"></audio>
             </div>
 
             <div class="sound-card" id="card-wind">
                 <h2>🍃 Vento</h2>
                 <button class="btn-toggle" onclick="toggleSound('wind')">LIGAR</button>
                 <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume('wind', this.value)">
-                <audio id="audio-wind" loop src="https://www.soundjay.com/nature/sounds/wind-01.mp3"></audio>
+                <audio id="audio-wind" loop src="https://actions.google.com/sounds/v1/ambiences/wind_heavy_gusts.ogg"></audio>
             </div>
 
             <div class="sound-card" id="card-fire">
                 <h2>🔥 Lareira</h2>
                 <button class="btn-toggle" onclick="toggleSound('fire')">LIGAR</button>
                 <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume('fire', this.value)">
-                <audio id="audio-fire" loop src="https://www.soundjay.com/misc/sounds/fireplace-1.mp3"></audio>
+                <audio id="audio-fire" loop src="https://actions.google.com/sounds/v1/ambiences/fireplace.ogg"></audio>
             </div>
         </div>
 
         <div class="master-controls">
-            <button onclick="stopAll()" style="background: #ff4444; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">PARAR TUDO</button>
+            <button onclick="stopAll()" style="background: transparent; color: #ff4444; border: 1px solid #ff4444; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-size: 0.7rem; letter-spacing: 2px;">PARAR TUDO</button>
         </div>
     </div>
 
@@ -113,10 +123,15 @@
             const btn = card.querySelector('.btn-toggle');
 
             if (audio.paused) {
-                audio.play();
-                btn.innerText = "PARAR";
-                btn.classList.add('on');
-                card.classList.add('active');
+                // Tenta dar o play
+                audio.play().then(() => {
+                    btn.innerText = "PARAR";
+                    btn.classList.add('on');
+                    card.classList.add('active');
+                }).catch(error => {
+                    console.log("Erro ao tocar áudio:", error);
+                    alert("Clique novamente para ativar o som.");
+                });
             } else {
                 audio.pause();
                 btn.innerText = "LIGAR";
