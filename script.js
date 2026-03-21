@@ -6,7 +6,8 @@ async function getCityByIP() {
         const response = await fetch('https://ipwho.is/');
         const data = await response.json();
         
-        if (data && data.city) {
+        // Ajustado para ler corretamente o formato da ipwho.is
+        if (data && data.success && data.city) {
             elementoLocal.textContent = `Horário de ${data.city}`;
         } else {
             elementoLocal.textContent = "Horário Local";
@@ -75,28 +76,41 @@ function toggleFullScreen() {
     }
 }
 
-
-// O navegador já cuida do "ESC" e do "Voltar" do Android sozinho 
-// quando usamos a API de Fullscreen, mas vamos garantir que o 
-// layout se comporte bem ouvindo o evento de mudança:
 document.addEventListener('fullscreenchange', () => {
     if (!document.fullscreenElement) {
         console.log("Saiu da tela cheia");
-        // O CSS acima já vai fazer o botão reaparecer sozinho aqui
     }
 });
 
+// 4. MANTER TELA ATIVA (WAKE LOCK)
+let wakeLock = null;
 
-// 4. ATALHOS DE TECLADO
+async function requestWakeLock() {
+    try {
+        if ('wakeLock' in navigator) {
+            wakeLock = await navigator.wakeLock.request('screen');
+            const btn = document.getElementById('wake-lock-btn');
+            if (btn) {
+                btn.style.color = "#00ff41";
+                btn.style.borderColor = "#00ff41";
+                btn.innerText = "TELA: SEMPRE ATIVA";
+            }
+        }
+    } catch (err) {
+        console.error(`Erro Wake Lock: ${err.message}`);
+    }
+}
+
+// 5. ATALHOS DE TECLADO
 document.addEventListener('keydown', (event) => {
     const key = event.key.toLowerCase();
-    if (key === 'f') toggleFullScreen(event);
+    if (key === 'f') toggleFullScreen();
     if (key === 'm') window.location.href = 'global.html';
     if (key === 'c') window.location.href = 'cronometro.html';
     if (event.code === 'Space') event.preventDefault();
 });
 
-// 5. INICIALIZAÇÃO (Onde a mágica começa)
+// 6. INICIALIZAÇÃO
 getCityByIP();
 setInterval(updateVortex, 1000);
 updateVortex();
