@@ -2,157 +2,160 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Deep Focus | Som & Imersão</title>
+    <title>Deep Focus | Pomodoro & Imersão</title>
     <link rel="stylesheet" href="style-tools.css">
     <style>
-        .sound-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .sound-card {
+        .pomodoro-container {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid #1a1a1a;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            margin: 20px auto;
             text-align: center;
-            transition: 0.3s;
         }
 
-        .sound-card.active {
-            border-color: #00ff41;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+        .timer-display {
+            font-size: 4rem;
+            font-family: monospace;
+            color: #00ff41;
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
         }
 
-        .sound-card h2 {
-            font-size: 0.8rem;
-            color: #888;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        input[type=range] {
-            width: 100%;
-            cursor: pointer;
-            accent-color: #00ff41;
-        }
-
-        .btn-toggle {
-            background: transparent;
-            border: 1px solid #333;
-            color: #fff;
-            padding: 5px 10px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            font-size: 0.7rem;
-            border-radius: 4px;
-            width: 80%;
-        }
-
-        .btn-toggle.on {
-            background: #00ff41;
-            color: #000;
-            border-color: #00ff41;
-            font-weight: bold;
-        }
-
-        .master-controls {
+        .audio-placeholder {
+            border: 1px dashed #333;
+            padding: 20px;
             margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #1a1a1a;
+            color: #555;
+            font-size: 0.8rem;
+            border-radius: 10px;
         }
 
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #555;
-            text-decoration: none;
-            font-size: 0.8rem;
+        .wake-lock-status {
+            font-size: 0.7rem;
+            margin-top: 15px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #444;
+        }
+
+        .status-active .status-dot {
+            background: #00ff41;
+            box-shadow: 0 0 5px #00ff41;
+        }
+
+        .btn-main {
+            background: transparent;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        .btn-main:hover { background: rgba(0, 255, 65, 0.1); }
     </style>
 </head>
 <body>
     <div class="tool-container">
-        <a href="index.html" class="back-btn">← VOLTAR AO VORTEX</a>
+        <a href="index.html" style="color:#555; text-decoration:none; font-size:0.8rem;">← VOLTAR</a>
         <h1>DEEP FOCUS</h1>
-        <p>Combine os sons para o foco perfeito</p>
-
-        <div class="sound-grid">
-            <div class="sound-card" id="card-rain">
-                <h2>🌧️ Chuva</h2>
-                <button class="btn-toggle" onclick="toggleSound('rain')">LIGAR</button>
-                <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume('rain', this.value)">
-                <audio id="audio-rain" loop src="https://actions.google.com/sounds/v1/ambiences/rain_on_roof.ogg"></audio>
+        
+        <div class="pomodoro-container">
+            <div id="timer-label" style="letter-spacing: 2px; color: #888;">FOCO</div>
+            <div class="timer-display" id="timer">25:00</div>
+            
+            <div class="controls">
+                <button class="btn-main" onclick="toggleTimer()" id="startBtn">INICIAR</button>
+                <button class="btn-main" style="border-color:#555; color:#555;" onclick="resetTimer()">REINICIAR</button>
             </div>
 
-            <div class="sound-card" id="card-cafe">
-                <h2>☕ Café</h2>
-                <button class="btn-toggle" onclick="toggleSound('cafe')">LIGAR</button>
-                <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume('cafe', this.value)">
-                <audio id="audio-cafe" loop src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg"></audio>
-            </div>
-
-            <div class="sound-card" id="card-wind">
-                <h2>🍃 Vento</h2>
-                <button class="btn-toggle" onclick="toggleSound('wind')">LIGAR</button>
-                <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume('wind', this.value)">
-                <audio id="audio-wind" loop src="https://actions.google.com/sounds/v1/ambiences/wind_heavy_gusts.ogg"></audio>
-            </div>
-
-            <div class="sound-card" id="card-fire">
-                <h2>🔥 Lareira</h2>
-                <button class="btn-toggle" onclick="toggleSound('fire')">LIGAR</button>
-                <input type="range" min="0" max="1" step="0.1" value="0.5" oninput="changeVolume('fire', this.value)">
-                <audio id="audio-fire" loop src="https://actions.google.com/sounds/v1/ambiences/fireplace.ogg"></audio>
+            <div id="wake-status-cont" class="wake-lock-status">
+                <div class="status-dot"></div>
+                <span id="wake-text">Tela: Normal</span>
+                <button onclick="requestWakeLock()" id="wakeBtn" style="background:none; border:1px solid #333; color:#888; font-size:10px; margin-left:10px; cursor:pointer;">ATIVAR TELA LIGADA</button>
             </div>
         </div>
 
-        <div class="master-controls">
-            <button onclick="stopAll()" style="background: transparent; color: #ff4444; border: 1px solid #ff4444; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-size: 0.7rem; letter-spacing: 2px;">PARAR TUDO</button>
+        <div class="audio-placeholder">
+            <p><strong>🎧 Laboratório de Som</strong></p>
+            <p>Estamos calibrando os sons imersivos para latência zero. Disponível em breve!</p>
         </div>
     </div>
 
     <script>
-        function toggleSound(id) {
-            const audio = document.getElementById('audio-' + id);
-            const card = document.getElementById('card-' + id);
-            const btn = card.querySelector('.btn-toggle');
+        // Lógica do Pomodoro
+        let timeLeft = 25 * 60;
+        let timerId = null;
+        let isRunning = false;
 
-            if (audio.paused) {
-                // Tenta dar o play
-                audio.play().then(() => {
-                    btn.innerText = "PARAR";
-                    btn.classList.add('on');
-                    card.classList.add('active');
-                }).catch(error => {
-                    console.log("Erro ao tocar áudio:", error);
-                    alert("Clique novamente para ativar o som.");
-                });
+        function updateDisplay() {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            if (isRunning) {
+                clearInterval(timerId);
+                document.getElementById('startBtn').innerText = "RETOMAR";
             } else {
-                audio.pause();
-                btn.innerText = "LIGAR";
-                btn.classList.remove('on');
-                card.classList.remove('active');
+                timerId = setInterval(() => {
+                    timeLeft--;
+                    updateDisplay();
+                    if (timeLeft <= 0) {
+                        clearInterval(timerId);
+                        alert("Tempo de foco encerrado! Hora de uma pausa.");
+                        resetTimer();
+                    }
+                }, 1000);
+                document.getElementById('startBtn').innerText = "PAUSAR";
             }
+            isRunning = !isRunning;
         }
 
-        function changeVolume(id, val) {
-            const audio = document.getElementById('audio-' + id);
-            audio.volume = val;
+        function resetTimer() {
+            clearInterval(timerId);
+            isRunning = false;
+            timeLeft = 25 * 60;
+            updateDisplay();
+            document.getElementById('startBtn').innerText = "INICIAR";
         }
 
-        function stopAll() {
-            const audios = document.querySelectorAll('audio');
-            const buttons = document.querySelectorAll('.btn-toggle');
-            const cards = document.querySelectorAll('.sound-card');
+        // Lógica para Manter a Tela Ligada (Wake Lock API)
+        let wakeLock = null;
 
-            audios.forEach(a => { a.pause(); a.currentTime = 0; });
-            buttons.forEach(b => { b.innerText = "LIGAR"; b.classList.remove('on'); });
-            cards.forEach(c => c.classList.remove('active'));
+        async function requestWakeLock() {
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    document.getElementById('wake-status-cont').classList.add('status-active');
+                    document.getElementById('wake-text').innerText = "Tela: Sempre Ativa";
+                    document.getElementById('wakeBtn').style.display = "none";
+                    
+                    wakeLock.addEventListener('release', () => {
+                        document.getElementById('wake-status-cont').classList.remove('status-active');
+                        document.getElementById('wake-text').innerText = "Tela: Normal";
+                    });
+                } else {
+                    alert("Seu navegador não suporta a função de manter a tela ligada.");
+                }
+            } catch (err) {
+                console.error(`${err.name}, ${err.message}`);
+            }
         }
     </script>
 </body>
